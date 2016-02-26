@@ -1,3 +1,315 @@
+.questions, .screen .content, .footer .content, .footer-confirm .wrapper, .screen .footer .content, .footer-message .content {
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0;
+}
+
+.form .questions>li {
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -khtml-opacity: .2;
+  -moz-opacity: .2;
+  opacity: .2;
+  -ms-filter: "alpha(Opacity=20)";
+  list-style: none;
+}
+
+.form .questions>li.focus {
+  cursor: default;
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  -ms-filter: "alpha(Opacity=100)";
+}
+
+.form .questions>li .wrapper {
+  padding: 50px 20px 30px 0;
+}
+
+.form .questions>li .wrapper .item {
+  color: #4fb0ae;
+  font-family: Source Sans Pro,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  padding: 0;
+  text-align: right;
+  width: 20px;
+  line-height: 35px;
+  margin-right: 30px;
+  font-size: 16px;
+}
+
+.form .questions>li.statement .wrapper div.item {
+  width: 40px;
+  font-size: 56px;
+  top: 20px;
+  line-height: normal;
+}
+
+.form .questions>li .wrapper .item .arrow {
+  position: absolute;
+  left: 25px;
+  top: 17px;
+  height: 2px;
+  width: 7px;
+  background-color: #4fb0ae;
+}
+
+.form .questions>li .wrapper .item .arrow .arrow-right {
+  width: 4px;
+  height: 4px;
+  margin-top: -1px;
+  margin-left: 3px;
+  border-right: 2px solid #4fb0ae;
+  border-bottom: 2px solid #4fb0ae;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+}
+
+.form .questions>li .wrapper .question {
+  color: #37404a;
+  font-family: Source Sans Pro,sans-serif;
+  position: relative;
+  padding: 0;
+  cursor: default;
+  padding-left: 50px;
+  line-height: 140%;
+  text-align: left;
+  font-size: 24px;
+  -webkit-touch-callout: text;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.form .questions>li .content {
+  position: relative;
+  padding: 37px 27px 0 50px;
+}
+
+.form .questions .list.multiple .control {
+  padding-left: 10px;
+  border-left-width: 1px;
+  border-left-style: dashed;
+  border-color: #4fb0ae;
+}
+
+.form .questions .list .multiple {
+  margin: 10px 0;
+  font-size: 16px;
+  display: none;
+  color: #37404a;
+}
+
+.form .questions .list.multiple .multiple {
+  display: block;
+  -khtml-opacity: .7;
+  -moz-opacity: .7;
+  opacity: .7;
+  -ms-filter: "alpha(Opacity=70)";
+}
+
+.form .questions .list ul {
+  padding: 0;
+  margin: 0;
+  margin-left: -3px;
+  display: block;
+  outline: 0;
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.form .questions .list ul li {
+  position: relative;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  cursor: pointer;
+  margin: 4px 3px;
+  list-style: none;
+  color: #fff;
+  padding: 8px 37px;
+}
+
+.letter {
+  position: relative;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  width: 16px;
+  padding: 0;
+  height: 17px;
+  font-size: 12px;
+  line-height: 16px;
+  border: 1px solid #000;
+  border: 1px solid rgba(0,0,0,.2);
+  margin-right: 7px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.letter span {
+  font-family: Helvetica,Arial;
+  -khtml-opacity: .4;
+  -moz-opacity: .4;
+  opacity: .4;
+  -ms-filter: "alpha(Opacity=40)";
+}
+
+.form .questions .list ul li .letter {
+  color: #4fb0ae;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.form .questions .images.list ul li .letter {
+  bottom: 12px;
+  top: auto;
+}
+
+.form .questions .list ul li .label {
+  color: #4fb0ae;
+  font-size: 21px;
+}
+
+.form .questions .list ul li .tick {
+  color: #4fb0ae;
+  top: 50%;
+  margin-top: -12px;
+}
+
+.form .questions .images.list ul li .tick {
+  bottom: 12px;
+  top: auto;
+}
+
+.columns li .tick {
+  display: none;
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  margin-top: -15px;
+  font-size: 21px;
+  -khtml-opacity: .7;
+  -moz-opacity: .7;
+  opacity: .7;
+  -ms-filter: "alpha(Opacity=70)";
+}
+
+.columns li.selected .tick {
+  display: block;
+}
+
+.columns li .image {
+  display: none;
+  width: 144px;
+  height: 144px;
+  margin: 10px auto;
+  background-position: center center;
+  background-color: #E6E6E6;
+  border: 1px solid #000;
+}
+
+li.images.list .columns li .image {
+  display: block;
+}
+
+.columns li .aux, .columns li .aux div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  z-index: -1;
+}
+
+.columns li .aux {
+  border-color: #4fb0ae;
+}
+
+.columns li .inset {
+  z-index: 3;
+  -webkit-box-shadow: inset 0 2px 0 #fff;
+  -moz-box-shadow: inset 0 2px 0 #fff;
+  box-shadow: inset 0 2px 0 #fff;
+  -khtml-opacity: .5;
+  -moz-opacity: .5;
+  opacity: .5;
+  -ms-filter: "alpha(Opacity=50)";
+}
+
+.columns li .bg {
+  z-index: 2;
+  background: #000;
+  -khtml-opacity: .03;
+  -moz-opacity: .03;
+  opacity: .03;
+  -ms-filter: "alpha(Opacity=3)"
+}
+
+.columns li .bd {
+  z-index: 4;
+  border: 1px solid #000;
+  -khtml-opacity: .15;
+  -moz-opacity: .15;
+  opacity: .15;
+  -ms-filter: "alpha(Opacity=15)";
+}
+
+.columns li .overlay {
+  background-color: #000;
+  background-color: rgba(0,0,0,0);
+  z-index: 1;
+}
+
+.columns li:hover .overlay {
+  background-color: #000;
+  background-color: rgba(0,0,0,.05);
+  z-index: 1;
+}
+
+.columns li.selected .overlay {
+  -khtml-opacity: .03;
+  -moz-opacity: .03;
+  opacity: .03;
+  -ms-filter: "alpha(Opacity=3)";
+  display: block;
+  background-color: #000;
+}
+
+.button-wrapper {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  margin-bottom: -5px;
+}
+
+.content-wrapper>.text, .button-wrap>.text {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  font-family: Helvetica,Arial;
+  font-size: 11px;
+  margin: 16px 8px 0;
+  color: #4fb0ae;
+}
+
 #fixed-footer {
   z-index: 11;
   position: fixed;
@@ -5,6 +317,7 @@
   width: 100%;
   border-top-style: solid;
   border-top-width: 1px;
+  border-top-color: #E6E6E6;
   height: 60px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -220,11 +533,7 @@
   right: 0;
   bottom: 0;
   z-index: 3;
-  -khtml-opacity: 0;
-  -moz-opacity: 0;
-  opacity: 0;
-  -ms-filter: "alpha(Opacity=0)";
-  background-color: #fff
+  background-color: #FAFAFA;
 }
 
 #fixed-footer .button-text {
@@ -330,7 +639,7 @@
   top: 0;
   margin-top: 14px;
   position: absolute;
-  width: 324px;
+  width: /*324px*/42%;
   left: 10px;
   -moz-transition: opacity ease-out 300ms 0ms;
   -webkit-transition: opacity ease-out 300ms 0ms;
@@ -373,7 +682,7 @@
 #fixed-footer .content #progress .bar {
   position: relative;
   margin: 8px 0;
-  width: 225px;
+  width: 100%;
   height: 5px;
   display: block
 }
@@ -442,7 +751,7 @@
   cursor: default;
   background-color: #4fb0ae;
   width: auto;
-  height: 35px;
+  height: 40px;
   line-height: 30px;
   padding: 5px 12px 0;
   font-size: 19px;
@@ -469,7 +778,11 @@
   cursor: pointer
 }
 
-.button.nav.hover-effect:hover.enabled,.default .focus .button.nav:hover.enabled,.default .footer-confirm .button.nav:hover.enabled,.screen .focus .button.nav:hover.enabled,.default #banner .button.nav:hover.enabled {
+.button.nav.hover-effect:hover.enabled,
+.default .focus .button.nav:hover.enabled,
+.default .footer-confirm .button.nav:hover.enabled,
+.screen .focus .button.nav:hover.enabled,
+.default #banner .button.nav:hover.enabled {
   -moz-transition: background-color ease-out 100ms 0ms;
   -webkit-transition: background-color ease-out 100ms 0ms;
   -o-transition: background-color ease-out 100ms 0ms;
@@ -533,6 +846,114 @@
   border-bottom: 1px solid #24504f;
 }
 
+.form .questions>li .content .description, .form .questions>li .content .stripe-description {
+  margin-top: -16px;
+  margin-bottom: 33px;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 160%;
+  text-align: left;
+  color: #37404a;
+  -khtml-opacity: .8;
+  -moz-opacity: .8;
+  opacity: .8;
+  -ms-filter: "alpha(Opacity=80)";
+}
+
+input, textarea {
+  display: block;
+  color: #4fb0ae;
+  width: 100%;
+  resize: none;
+  background: 0 0;
+  outline: 0;
+  font-family: Source Sans Pro,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 30px;
+  line-height: 40px;
+  padding: 3px;
+  margin: 2px;
+}
+
+.form .questions>li .input input {
+  -moz-transition: border 0ms linear 600ms,border-radius 0ms linear 600ms;
+  -webkit-transition: border 0ms linear 600ms,border-radius 0ms linear 600ms;
+  -o-transition: border 0ms linear 600ms,border-radius 0ms linear 600ms;
+  transition: border 0ms linear 600ms,border-radius 0ms linear 600ms;
+  border: 2px dashed rgba(79, 176, 174, 0.4);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+.form .questions>li .input input:focus {
+  border-color: transparent;
+}
+
+.confirm-container {
+  position: absolute;
+  bottom: -60px;
+  padding: 5px;
+}
+
+.confirm-container .text {
+  color: #4fb0ae;
+  font-family: Helvetica,Arial;
+  float: right;
+  font-size: 11px;
+  margin: 16px 8px 0;
+}
+
+.confirm-container .aux, .confirm-container .aux div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-color: #4fb0ae;
+  z-index: -1;
+}
+
+.confirm-container .inset {
+  z-index: 3;
+  -webkit-box-shadow: inset 0 2px 0 #fff;
+  -moz-box-shadow: inset 0 2px 0 #fff;
+  box-shadow: inset 0 2px 0 #fff;
+  -khtml-opacity: .5;
+  -moz-opacity: .5;
+  opacity: .5;
+  -ms-filter: "alpha(Opacity=50)";
+}
+
+.confirm-container .bg {
+  z-index: 2;
+  background: #000;
+  -khtml-opacity: .03;
+  -moz-opacity: .03;
+  opacity: .03;
+  -ms-filter: "alpha(Opacity=3)";
+}
+
+.confirm-container .bd {
+  z-index: 4;
+  border: 1px solid #000;
+  -khtml-opacity: .15;
+  -moz-opacity: .15;
+  opacity: .15;
+  -ms-filter: "alpha(Opacity=15)";
+}
+
+.confirm-container .overlay {
+  background-color: rgba(0,0,0,0);
+  z-index: 1;
+}
+
 #unfixed-footer {
   z-index: 10;
   position: fixed;
@@ -540,6 +961,8 @@
   width: 100%;
   border-top-style: solid;
   border-top-width: 1px;
+  border-top-color: #E6E6E6;
+  background-color: #fff;
   height: 60px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
