@@ -807,7 +807,8 @@ li.images.list .columns li .image {
   margin-top: 1px
 }
 
-.button.nav.disabled {
+.button.nav.disabled,
+.button.general.disabled {
   -khtml-opacity: .5;
   -moz-opacity: .5;
   opacity: .5;
@@ -820,7 +821,7 @@ li.images.list .columns li .image {
 
 .button.general {
   display: inline-block;
-  cursor: default;
+  cursor: pointer;
   background-color: #4fb0ae;
   width: auto;
   height: 52px;
