@@ -2,6 +2,7 @@
   "name": "codehero",
   "dependencies": {
     "jquery": "^2.2.1",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "sweetalert": "^1.1.3"
   }
 }

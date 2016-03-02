@@ -56,6 +56,7 @@ gulp.task('default', ['bower', 'vendors', 'main']);
 gulp.task('vendors', function () {
     gulp.src([sourcesDir + bowDir + 'bootstrap/dist/**/*']).pipe(gulp.dest(destDir + 'vendor/bootstrap/'));
     gulp.src([sourcesDir + bowDir + 'jquery/dist/jquery.min.js']).pipe(gulp.dest(destDir + 'vendor/jquery/'));
+    gulp.src([sourcesDir + bowDir + 'sweetalert/dist/*']).pipe(gulp.dest(destDir + 'vendor/sweetalert/'));
 });
 
 /** Bower */
