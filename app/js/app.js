@@ -23,6 +23,52 @@
         checkNavigationBtns(questions.find('>li.focus'));
         // enter handler
         $('body').on('keyup', enterHandler);
+        // init plyr
+        plyr.setup('.plyr');
+    },
+
+    addAttachment = function (li, questionModel) {
+        switch (questionModel.attachment.type) {
+            case "audio":
+                $('<div style="margin-bottom: 33px;" class="plyr">' +
+                    '<audio controls crossorigin>'+
+                    '<!-- Audio files -->' +
+                    '<source src="'+ questionModel.attachment.src_path +'" type="audio/'+ questionModel.attachment.src_type +'">' +
+
+                    '<!-- Fallback for browsers that don\'t support the <audio> element -->' +
+                    '<a href="'+ questionModel.attachment.src_path +'">Download audio</a>' +
+                    '</audio>' +
+                    '</div>').insertBefore(li.find('.content .content-wrapper'));
+                break;
+
+            case "video":
+                var videoContainer = '';
+
+                switch (questionModel.attachment.src_type) {
+                    case "youtube":
+                        videoContainer = '<div data-video-id="'+questionModel.attachment.src_id+'" data-type="youtube"></div>';
+                        break;
+
+                    case "vimeo":
+                        videoContainer = '<div data-video-id="'+questionModel.attachment.src_id+'" data-type="vimeo"></div>';
+                        break;
+
+                    default:
+                        videoContainer = '<video poster="'+ questionModel.attachment.src_poster +'" controls crossorigin>'+
+                            '<!-- Video files -->' +
+                            '<source src="'+ questionModel.attachment.src_path +'" type="video/'+ questionModel.attachment.src_type +'">' +
+
+                            '<!-- Fallback for browsers that don\'t support the <audio> element -->' +
+                            '<a href="'+ questionModel.attachment.src_path +'">Download video</a>' +
+                            '</video>';
+                        break;
+                }
+
+                $('<div style="margin-bottom: 33px;" class="plyr">' +
+                    videoContainer +
+                    '</div>').insertBefore(li.find('.content .content-wrapper'));
+                break;
+        }
     },
 
     questionsInit = function () {
@@ -108,6 +154,11 @@
                             '</div>' +
                             '</div>'+
                             '</div>');
+
+                        // attachment add:
+                        if (questionModel.attachment && questionModel.attachment.type) {
+                            addAttachment(li, questionModel);
+                        }
                         break;
 
                     case "list":
@@ -178,6 +229,10 @@
                                 $(event.target).closest('li').toggleClass('selected');
                             }
                         });
+                        // attachment add:
+                        if (questionModel.attachment && questionModel.attachment.type) {
+                            addAttachment(li, questionModel);
+                        }
                         break;
 
                     case "images-list":
@@ -249,6 +304,10 @@
                                 $(event.target).closest('li').toggleClass('selected');
                             }
                         });
+                        // attachment add:
+                        if (questionModel.attachment && questionModel.attachment.type) {
+                            addAttachment(li, questionModel);
+                        }
                         break;
                 }
                 questionsList.push(li);

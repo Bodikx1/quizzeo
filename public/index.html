@@ -7,6 +7,7 @@
     <link href="/dist/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!--<link href="/dist/vendor/bootstrap/css/bootstrap-theme.min.css"  rel="stylesheet">-->
     <link href="/dist/vendor/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="/dist/vendor/plyr/plyr.css" rel="stylesheet">
     <link href="/dist/css/app.css" rel="stylesheet">
 </head>
 <body>
@@ -49,9 +50,50 @@
     </div>
 </article>
 
+<!-- Load SVG defs -->
+<!-- You should bundle all SVG/Icons into one file using a build tool such as gulp and svg store -->
+<script>
+    (function() {
+        [
+            '/dist/vendor/plyr/sprite.svg'
+        ]
+                .forEach(function(u) {
+                    var x = new XMLHttpRequest(),
+                            b = document.body;
+
+                    // Check for CORS support
+                    // If you're loading from same domain, you can remove the whole if/else statement
+                    // XHR for Chrome/Firefox/Opera/Safari/IE10+
+                    if ('withCredentials' in x) {
+                        x.open('GET', u, true);
+                    }
+                    // XDomainRequest for IE8 & IE9
+                    else if (typeof XDomainRequest == 'function') {
+                        x = new XDomainRequest();
+                        x.open('GET', u);
+                    }
+                    else { return; }
+
+                    // Inject hidden div with sprite on load
+                    x.onload = function() {
+                        var c = document.createElement('div');
+                        c.setAttribute('hidden', '');
+                        c.innerHTML = x.responseText;
+                        b.insertBefore(c, b.childNodes[0]);
+                    }
+
+                    // Timeout for IE9
+                    setTimeout(function () {
+                        x.send();
+                    }, 0);
+                });
+    })();
+</script>
+
 <script src="/dist/vendor/jquery/jquery.min.js"></script>
 <script src="/dist/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="/dist/vendor/sweetalert/sweetalert.min.js"></script>
+<script src="/dist/vendor/plyr/plyr.js"></script>
 <script src="/dist/js/ajax_api.js"></script>
 <script src="/dist/js/app.js"></script>
 </body>

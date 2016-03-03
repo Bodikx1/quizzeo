@@ -58,19 +58,90 @@ http.createServer(function(req, res) {
                                     {
                                         "id": 1,
                                         "label": "KittensMittens",
-                                        "image": "/images/cat_1.png"
+                                        "image": "/resources/cat_1.png"
                                     },
                                     {
                                         "id": 2,
                                         "label": "LordMjau",
-                                        "image": "/images/cat_2.png"
+                                        "image": "/resources/cat_2.png"
                                     },
                                     {
                                         "id": 3,
                                         "label": "Furry Lapresta",
-                                        "image": "/images/cat_3.png"
+                                        "image": "/resources/cat_3.png"
                                     }
                                 ]
+                            },
+                            {
+                                "id": 2202330,
+                                "type": "textfield",
+                                "question": "What is this sound?",
+                                "description": "Listen to this sound and choose the right answer:",
+                                "attachment": {
+                                    "type": "audio",
+                                    "src_path": "/resources/audio.mp3",
+                                    "src_type": "mp3"
+                                }
+                            },
+                            {
+                                "id": 2202331,
+                                "type": "list",
+                                "multiple": true,
+                                "question": "What is this video?",
+                                "description": "Watch the video and choose the right answer:",
+                                "choices": [
+                                    {
+                                        "id": 1,
+                                        "label": "Video 1"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "label": "Video 2"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "label": "Video 3"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "label": "Video 4"
+                                    }
+                                ],
+                                "attachment": {
+                                    "type": "video",
+                                    "src_path": "",
+                                    "src_type": "youtube",
+                                    "src_id": "bTqVqk7FSmY"
+                                }
+                            },
+                            {
+                                "id": 2202332,
+                                "type": "images-list",
+                                "question": "What is this video?",
+                                "description": "Watch the video and choose the right answer:",
+                                "choices": [
+                                    {
+                                        "id": 1,
+                                        "label": "Video 1",
+                                        "image": "/resources/cat_1.png"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "label": "Video 2",
+                                        "image": "/resources/cat_2.png"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "label": "Video 3",
+                                        "image": "/resources/cat_3.png"
+                                    }
+                                ],
+                                "attachment": {
+                                    "type": "video",
+                                    "src_poster": "https://cdn.selz.com/plyr/1.5/View_From_A_Blue_Moon_Trailer-HD.jpg",
+                                    "src_path": "/resources/video1.mp4",
+                                    "src_type": "mp4"
+                                }
                             }
                         ]
                     }));
