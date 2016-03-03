@@ -40,6 +40,8 @@ GET `/api/questions/`
 
 GET `/api/check-question/?id=0&value=input_val`
 
+`value = input_val | [choices_ids]`
+
 ### Response example
 ```javascript
 {
