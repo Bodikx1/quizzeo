@@ -319,6 +319,17 @@
         }
     },
 
+    gotoGuestion = function (questions, currentQuestion, qotoQuestion) {
+        currentQuestion.nextUntil('#' + qotoQuestion).addClass('answered');
+        currentQuestion.nextUntil('#' + qotoQuestion).find('.input input').prop('readonly', true);
+        currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
+        currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: lawngreen;margin: 5px 0;">Answer accepted successfully!</p>');
+
+        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*5)}, '500',function(){
+            //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
+        });
+    },
+
     navigationHandler = function (event) {
         var btnType = $(event.target).closest('div.button-wrapper')[0],
             btnType = btnType.classList[btnType.classList.length-1];
@@ -370,9 +381,8 @@
 
                                         if (response.data.go_to_another_question) {
                                             var qotoQuestion = response.data.go_to_another_question;
-                                            questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*5)}, '500',function(){
-                                                //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
-                                            });
+
+                                            gotoGuestion(questions, currentQuestion, qotoQuestion);
                                         }
                                     } else {
                                         if (response.data.result.msg) {
@@ -398,7 +408,9 @@
                             currentQuestion.find('.message').html('');
 
                             if (currentQuestion.find('ul.columns > li.selected').length) {
-                                answerModel =
+                                $.each(currentQuestion.find('ul.columns > li.selected'), function (index, field) {
+                                    answerModel.value.push(field.id);
+                                });
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
@@ -417,9 +429,8 @@
 
                                         if (response.data.go_to_another_question) {
                                             var qotoQuestion = response.data.go_to_another_question;
-                                            questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*5)}, '500',function(){
-                                                //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
-                                            });
+
+                                            gotoGuestion(questions, currentQuestion, qotoQuestion);
                                         }
                                     } else {
                                         if (response.data.result.msg) {
