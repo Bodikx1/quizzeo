@@ -1,3 +1,4 @@
 /node_modules
 /app/bower_components
 /public/dist
+/public/config.js

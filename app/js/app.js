@@ -12,8 +12,8 @@
             progressBarInit();
         }
         // add responsive margins
-        responsiveMargins(10, 30);
-        $(window).resize(responsiveMargins.bind(null, 10, 30));
+        responsiveMargins(10, 70);
+        $(window).resize(responsiveMargins.bind(null, 10, 70));
         // add focus
         $(window).scroll(focusQuestion);
         $(window).trigger('scroll');
@@ -163,10 +163,82 @@
 
                     case "list":
                         var choicesList = [],
-                            chCode = 65;
+                            chCode = 65,
+                            otherClick = false;
+                        // end variables;
+
+                        var choicesClickHandler = function (event) {
+                            var currLi = $(event.target).closest('li'),
+                                currLiInitailState = currLi.clone(),
+                                otherClick = currLi.closest('li').attr('id') === "Other" && !currLi.hasClass('editable');
+                            // end variables;
+
+                            var otherClickHandler = function () {
+                              if (!currLi.hasClass('locked')) {
+                                var letter = currLi.find('.letter span').text().charCodeAt(0);
+
+                                currLi.html('<div class="input"><input class="" type="text" autocomplete="off" value="'+currLi.find('input[name="value"]').val()+'"></div>')
+                                  .addClass('locked')
+                                  .find('.input input').focus()
+                                  .one('blur', function (event) {
+                                    if (!currLi.hasClass('editable')) {
+                                      currLiInitailState.find('.letter span').text(String.fromCharCode(chCode).toUpperCase());
+                                      currLiInitailState.on('click', choicesClickHandler);
+                                      chCode++;
+                                    }
+
+
+                                    currLi.html('<input type="hidden" name="value" value="'+ $(this).val() +'" autocomplete="off">' +
+                                    '<div class="letter"><span>'+ String.fromCharCode(letter).toUpperCase() +'</span></div>' +
+                                    '<span class="label">'+ $(this).val() +' <span class="glyphicon glyphicon-pencil" style="font-size: 15px;"></span> <span class="glyphicon glyphicon-remove" style="font-size: 15px;"></span></span>' +
+                                    '<span class="tick glyphicon glyphicon-ok"></span>' +
+                                    '<div class="aux ">' +
+                                    '<div class="inset"></div>' +
+                                    '<div class="bg"></div>' +
+                                    '<div class="bd"></div>' +
+                                    '<div class="overlay"></div>' +
+                                    '</div>').removeClass('locked').addClass('editable').after(currLiInitailState);
+
+                                    currLi.find('.glyphicon-pencil').one('click', function (event) {
+                                        otherClickHandler();
+                                    });
+
+                                    currLi.find('.glyphicon-remove').one('click', function (event) {
+                                      currLi.nextUntil('ul').each(function (index, value) {
+                                        var letter = $(value).find('.letter span').text().charCodeAt(0);
+                                        $(value).find('.letter span').text(String.fromCharCode(--letter).toUpperCase());
+                                      });
+                                      currLi.remove();
+                                      chCode--;
+                                    });
+                                  });
+                                }
+                            };
+                            // end functions;
+
+                            if (!questionModel.multiple) {
+                              if (!otherClick) {
+                                questions.find('ul.columns > li').removeClass('selected');
+                                currLi.addClass('selected');
+                                // quick-validate
+                                if (li.hasClass('quick-validate')) {
+                                  li.find('.button.nav').trigger('click');
+                                }
+                              } else if (!currLi.hasClass('editable')) {
+                                otherClickHandler();
+                              }
+                            } else {
+                              if (!otherClick) {
+                                currLi.toggleClass('selected');
+                              } else if (!currLi.hasClass('editable')) {
+                                otherClickHandler();
+                              }
+                            }
+                        };
+                        // end functions;
 
                         questionsNumerator++;
-                        li.addClass('list'+ (questionModel.multiple ? ' multiple' : ''));
+                        li.addClass('list'+ (questionModel.multiple ? ' multiple' : '') + (questionModel['quick-validate'] ? ' quick-validate' : ''));
                         li.html('<div class="wrapper">' +
                             '<div class="item">' +
                             '<span>'+ questionsNumerator +'</span>' +
@@ -207,7 +279,7 @@
 
                         questionModel.choices.length && questionModel.choices.forEach(function (choiceModel, index) {
                             choicesList.push('<li id="'+ choiceModel.id +'">' +
-                                '<input type="hidden" name="value" value="'+ choiceModel.label +'" autocomplete="off">' +
+                                '<input type="hidden" name="value" value="'+ choiceModel.id +'" autocomplete="off">' +
                                 '<div class="letter"><span>'+ String.fromCharCode(chCode).toUpperCase() +'</span></div>' +
                                 '<span class="label">'+ choiceModel.label +'</span>' +
                                 '<span class="tick glyphicon glyphicon-ok"></span>' +
@@ -218,17 +290,11 @@
                                 '<div class="overlay"></div>' +
                                 '</div>' +
                                 '</li>');
+
                             chCode++;
                         });
                         li.find('ul.columns').append(choicesList);
-                        li.find('ul.columns > li').on('click', function (event) {
-                            if (!questionModel.multiple) {
-                                questions.find('ul.columns > li').removeClass('selected');
-                                $(event.target).closest('li').addClass('selected');
-                            } else {
-                                $(event.target).closest('li').toggleClass('selected');
-                            }
-                        });
+                        li.find('ul.columns > li').on('click', choicesClickHandler);
                         // attachment add:
                         if (questionModel.attachment && questionModel.attachment.type) {
                             addAttachment(li, questionModel);
@@ -348,6 +414,9 @@
             if (currentY >= question.offsetTop && currentY <= question.offsetTop + question.offsetHeight) {
                 $(question).addClass('focus');
 
+                questions.find('input').blur();
+                $(question).find('input').focus();
+
                 // enable btn navigation
                 checkNavigationBtns(question);
             } else {
@@ -379,12 +448,13 @@
     },
 
     gotoGuestion = function (questions, currentQuestion, qotoQuestion) {
-        currentQuestion.nextUntil('#' + qotoQuestion).addClass('answered');
-        currentQuestion.nextUntil('#' + qotoQuestion).find('.input input').prop('readonly', true);
-        currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
-        currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: lawngreen;margin: 5px 0;">Answer accepted successfully!</p>');
-
-        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*5)}, '500',function(){
+        if (!window.appOptions.old_questions_editables) {
+          currentQuestion.nextUntil('#' + qotoQuestion).addClass('answered');
+          currentQuestion.nextUntil('#' + qotoQuestion).find('.input input').prop('readonly', true);
+          currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
+          currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: lawngreen;margin: 5px 0;">Answer accepted successfully!</p>');
+        }
+        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*3)}, '500',function(){
             //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
         });
     },
@@ -393,11 +463,10 @@
         var btnType = $(event.target).closest('div.button-wrapper')[0],
             btnType = btnType.classList[btnType.classList.length-1];
 
-
         switch (btnType) {
             case "up":
                 if ($(event.target).closest('div.button.nav').hasClass('enabled')) {
-                    questions.find('>li.focus').prev().length && $('body').animate({scrollTop: questions.find('>li.focus').prev().offset().top - parseInt(window.innerHeight/100*5)}, '500',function(){
+                    questions.find('>li.focus').prev().length && $('body').animate({scrollTop: questions.find('>li.focus').prev().offset().top - parseInt(window.innerHeight/100*3)}, '500',function(){
                         //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
                     });
                 }
@@ -425,9 +494,10 @@
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
-                                        currentQuestion.addClass('answered');
-                                        currentQuestion.find('.input input').prop('readonly', true);
-
+                                        if (!window.appOptions.old_questions_editables) {
+                                          currentQuestion.addClass('answered');
+                                          currentQuestion.find('.input input').prop('readonly', true);
+                                        }
                                         if (response.data.total_progression) {
                                             progressBarInit({total: response.data.total_progression});
                                         } else {
@@ -467,15 +537,16 @@
                             currentQuestion.find('.message').html('');
 
                             if (currentQuestion.find('ul.columns > li.selected').length) {
-                                $.each(currentQuestion.find('ul.columns > li.selected'), function (index, field) {
-                                    answerModel.value.push(field.id);
+                                $.each(currentQuestion.find('ul.columns > li.selected input'), function (index, field) {
+                                    answerModel.value.push(field.value);
                                 });
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
-                                        currentQuestion.addClass('answered');
-                                        currentQuestion.find('ul.columns > li').off('click');
-
+                                        if (!window.appOptions.old_questions_editables) {
+                                          currentQuestion.addClass('answered');
+                                          currentQuestion.find('ul.columns > li').off('click');
+                                        }
                                         if (response.data.total_progression) {
                                             progressBarInit({total: response.data.total_progression});
                                         } else {
@@ -506,7 +577,7 @@
                 }
 
                 if ($(event.target).closest('div.button.nav').hasClass('enabled')) {
-                    questions.find('>li.focus').next().length &&  $('body').animate({scrollTop: questions.find('>li.focus').next().offset().top - parseInt(window.innerHeight/100*5)}, '500',function(){
+                    questions.find('>li.focus').next().length &&  $('body').animate({scrollTop: questions.find('>li.focus').next().offset().top - parseInt(window.innerHeight/100*3)}, '500',function(){
                         //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
                     });
                 }

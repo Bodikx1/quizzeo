@@ -114,6 +114,10 @@
   -ms-filter: "alpha(Opacity=70)";
 }
 
+.form .questions .list.quick-validate .confirm-container {
+  display: none;
+}
+
 .form .questions .list ul {
   padding: 0;
   margin: 0;
