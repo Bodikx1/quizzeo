@@ -23,6 +23,11 @@
   -ms-filter: "alpha(Opacity=100)";
 }
 
+.form .questions>li.dirty {
+  background: rgba(102, 51, 153, 0.14);
+  opacity: 1;
+}
+
 .form .questions>li .wrapper {
   padding: 0px 20px 30px 0;
 }
@@ -43,7 +48,7 @@
 .form .questions>li.statement .wrapper div.item {
   width: 40px;
   font-size: 56px;
-  top: 0px;
+  margin-top: -10px;
   line-height: normal;
 }
 
@@ -85,6 +90,7 @@
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  word-break: break-word;
 }
 
 .form .questions>li .content {

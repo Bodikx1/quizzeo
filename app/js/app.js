@@ -1,6 +1,7 @@
 (function () {
     var questions = $('.form ul.questions'),
         progressBar = $('#progress'),
+        progressBarCounter = 0,
         progressLabel = progressBar.find('.label span'),
         progressPercent = progressBar.find('.bar .progress');
     // variables end;
@@ -25,10 +26,34 @@
         $('body').on('keyup', enterHandler);
         // init plyr
         plyr.setup('.plyr');
+        // mobile config
+        mobileConfigInit();
+        $(window).resize(mobileConfigInit);
+    },
+
+    mobileConfigInit = function () {
+      // one_question_per_page
+      if (window.appOptions.mobile.one_question_per_page && $(window).width() < 768) {
+        if (!$('#mobileStyles').length) {
+          var mobileStyles = '.form .questions > li {visibility: hidden;}' +
+              '.form .questions > li.focus {visibility: visible;}';
+          var styleTag = $('<style/>', {id: 'mobileStyles'}).html(mobileStyles);
+          $(document.head).append(styleTag);
+        }
+      } else {
+        $('#mobileStyles').length && $('#mobileStyles').remove();
+      }
+      // one_question_per_page end;
     },
 
     addAttachment = function (li, questionModel) {
         switch (questionModel.attachment.type) {
+            case "image":
+                $('<div style="margin-bottom: 33px;" class="image">' +
+                    '<img class="img-responsive" src="'+ questionModel.attachment.src_path +'">' +
+                    '</div>').insertBefore(li.find('.content .content-wrapper'));
+              break;
+
             case "audio":
                 $('<div style="margin-bottom: 33px;" class="plyr">' +
                     '<audio controls crossorigin>'+
@@ -73,6 +98,8 @@
 
     questionsInit = function () {
         var questionsNumerator = 0,
+            lettersNumerator = 65,
+            isSection = false,
             questionsList = [],
             questionsListModel = {
                 "fields": []
@@ -94,9 +121,19 @@
 
                 switch (questionModel.type) {
                     case "statement":
-                        li.addClass('statement');
+                    case "section":
+                        // reset lettersNumerator
+                        lettersNumerator = 65;
+
+                        isSection = questionModel.type === "section";
+
+                        li.addClass(questionModel.type);
                         li.html('<div class="wrapper">' +
-                            '<div class="item">“</div>' +
+                            '<div class="item">'+ (questionModel.type === "section" ? '<span>'+(++questionsNumerator)+'</span>' : '“') +
+                            '<div '+ (questionModel.type === "section" ? '' : 'style="display:none;"') +' class="arrow">' +
+                            '<div class="arrow-right"></div>' +
+                            '</div>' +
+                            '</div>' +
                             '<div class="question"><span>'+ questionModel.question +'</span></div>' +
                             '<div class="content">' +
                             '<div class="description">'+ (questionModel.description ? questionModel.description : '') +'</div>' +
@@ -114,13 +151,13 @@
                         break;
 
                     case "textfield":
-                        questionsNumerator++;
-                        li.addClass('textfield');
+                        !isSection && questionsNumerator++;
+                        li.addClass(questionModel.type);
                         li.html('<div class="wrapper">' +
                             '<div class="item">' +
-                            '<span>'+ questionsNumerator +'</span>' +
+                            '<span>'+ (isSection ? String.fromCharCode(lettersNumerator++).toLowerCase()+'.' : questionsNumerator) +'</span>' +
                             '<div class="arrow">' +
-                            '<div class="arrow-right"></div>' +
+                            '<div '+ (isSection ? 'style="display:none;"' : '') +' class="arrow-right"></div>' +
                             '</div>' +
                             '</div>' +
                             '<div class="question"><span>'+ questionModel.question +'</span></div>' +
@@ -154,11 +191,6 @@
                             '</div>' +
                             '</div>'+
                             '</div>');
-
-                        // attachment add:
-                        if (questionModel.attachment && questionModel.attachment.type) {
-                            addAttachment(li, questionModel);
-                        }
                         break;
 
                     case "list":
@@ -237,13 +269,13 @@
                         };
                         // end functions;
 
-                        questionsNumerator++;
+                        !isSection && questionsNumerator++;
                         li.addClass('list'+ (questionModel.multiple ? ' multiple' : '') + (questionModel['quick-validate'] ? ' quick-validate' : ''));
                         li.html('<div class="wrapper">' +
                             '<div class="item">' +
-                            '<span>'+ questionsNumerator +'</span>' +
+                            '<span>'+ (isSection ? String.fromCharCode(lettersNumerator++).toLowerCase()+'.' : questionsNumerator) +'</span>' +
                             '<div class="arrow">' +
-                            '<div class="arrow-right"></div>' +
+                            '<div '+ (isSection ? 'style="display:none;"' : '') +' class="arrow-right"></div>' +
                             '</div>' +
                             '</div>' +
                             '<div class="question"><span>'+ questionModel.question +'</span></div>' +
@@ -295,23 +327,19 @@
                         });
                         li.find('ul.columns').append(choicesList);
                         li.find('ul.columns > li').on('click', choicesClickHandler);
-                        // attachment add:
-                        if (questionModel.attachment && questionModel.attachment.type) {
-                            addAttachment(li, questionModel);
-                        }
                         break;
 
                     case "images-list":
                         var choicesList = [],
                             chCode = 65;
 
-                        questionsNumerator++;
+                        !isSection && questionsNumerator++;
                         li.addClass('images list'+ (questionModel.multiple ? ' multiple' : ''));
                         li.html('<div class="wrapper">' +
                             '<div class="item">' +
-                            '<span>'+ questionsNumerator +'</span>' +
+                            '<span>'+ (isSection ? String.fromCharCode(lettersNumerator++).toLowerCase()+'.' : questionsNumerator) +'</span>' +
                             '<div class="arrow">' +
-                            '<div class="arrow-right"></div>' +
+                            '<div '+ (isSection ? 'style="display:none;"' : '') +' class="arrow-right"></div>' +
                             '</div>' +
                             '</div>' +
                             '<div class="question"><span>'+ questionModel.question +'</span></div>' +
@@ -370,11 +398,12 @@
                                 $(event.target).closest('li').toggleClass('selected');
                             }
                         });
-                        // attachment add:
-                        if (questionModel.attachment && questionModel.attachment.type) {
-                            addAttachment(li, questionModel);
-                        }
                         break;
+                }
+
+                // attachment add:
+                if (questionModel.attachment && questionModel.attachment.type) {
+                    addAttachment(li, questionModel);
                 }
                 questionsList.push(li);
             });
@@ -390,8 +419,8 @@
     },
 
     progressBarInit = function (options) {
-        var allCount = questions.find('>li:not([class*="statement"])').length,
-            answeredCount = (options && options.total) ? options.total : questions.find('>li.answered').length,
+        var allCount = questions.find('>li:not([class*="statement"]):not([class*="section"])').length,
+            answeredCount = (options && options.total) ? options.total : progressBarCounter,
             percent = answeredCount*100/allCount;
 
         progressLabel.text(answeredCount + ' of '+ allCount +' answered');
@@ -412,11 +441,18 @@
 
         questions.find('>li').length && $.each(questions.find('>li'), function (index, question) {
             if (currentY >= question.offsetTop && currentY <= question.offsetTop + question.offsetHeight) {
-                $(question).addClass('focus');
+                if (!$(question).hasClass('focus')) {
+                  $(question).addClass('focus');
 
-                questions.find('input').blur();
-                $(question).find('input').focus();
+                  questions.find('input').blur();
+                  $(question).find('input').focus();
 
+                  // if user don't reply on previos question, make different li style
+                  var prevQuestion = $(question).prev(':not([class*="statement"]):not([class*="section"])');
+                  prevQuestion.length
+                  && !prevQuestion.hasClass('aswered')
+                  && prevQuestion.addClass('dirty');
+                }
                 // enable btn navigation
                 checkNavigationBtns(question);
             } else {
@@ -449,7 +485,7 @@
 
     gotoGuestion = function (questions, currentQuestion, qotoQuestion) {
         if (!window.appOptions.old_questions_editables) {
-          currentQuestion.nextUntil('#' + qotoQuestion).addClass('answered');
+          currentQuestion.nextUntil('#' + qotoQuestion).addClass('locked');
           currentQuestion.nextUntil('#' + qotoQuestion).find('.input input').prop('readonly', true);
           currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
           currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: lawngreen;margin: 5px 0;">Answer accepted successfully!</p>');
@@ -477,9 +513,10 @@
                     questType = currentQuestion.data('model') && currentQuestion.data('model').type,
                     qotoQuestion = '';
 
-                if (!currentQuestion.hasClass('answered')) {
+                if (!currentQuestion.hasClass('locked')) {
                     switch (questType) {
                         case "statement":
+                        case "section":
                             break;
 
                         case "textfield":
@@ -494,8 +531,13 @@
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
+                                        if (!currentQuestion.hasClass('aswered')) {
+                                          progressBarCounter++;
+                                          currentQuestion.removeClass('dirty').addClass('aswered');
+                                        }
+
                                         if (!window.appOptions.old_questions_editables) {
-                                          currentQuestion.addClass('answered');
+                                          currentQuestion.addClass('locked');
                                           currentQuestion.find('.input input').prop('readonly', true);
                                         }
                                         if (response.data.total_progression) {
@@ -543,8 +585,13 @@
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
+                                        if (!currentQuestion.hasClass('aswered')) {
+                                          progressBarCounter++;
+                                          currentQuestion.removeClass('dirty').addClass('aswered');
+                                        }
+
                                         if (!window.appOptions.old_questions_editables) {
-                                          currentQuestion.addClass('answered');
+                                          currentQuestion.addClass('locked');
                                           currentQuestion.find('ul.columns > li').off('click');
                                         }
                                         if (response.data.total_progression) {
@@ -586,7 +633,7 @@
             case "submit":
                 var currentQuestion = questions.find('>li.focus');
 
-                if (!currentQuestion.hasClass('answered')) {
+                if (!currentQuestion.hasClass('locked')) {
                     currentQuestion.find('.button.nav').trigger('click');
                 }
 

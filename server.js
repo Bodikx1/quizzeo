@@ -112,8 +112,12 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 300,
-                              "type": "statement",
-                              "question": "SECTION / About  developers..."
+                              "type": "section",
+                              "question": "SECTION / About  developers...",
+                              "attachment": {
+                                "type": "image",
+                                "src_path": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT1b446FrpP6A1V2cuLIF9UslY5IGacSfnhyAbVphPOYtJT9vc"
+                              }
                           },
 
                           {
@@ -161,7 +165,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 400,
-                              "type": "statement",
+                              "type": "section",
                               "question": "SECTION / About  storage..."
                           },
 
@@ -237,7 +241,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 500,
-                              "type": "statement",
+                              "type": "section",
                               "question": "SECTION / About  emails..."
                           },
 
@@ -282,7 +286,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 600,
-                              "type": "statement",
+                              "type": "section",
                               "question": "SECTION / About  images..."
                           },
 

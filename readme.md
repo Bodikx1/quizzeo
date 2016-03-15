@@ -16,7 +16,7 @@ GET `/api/questions/`
 {
     "fields": [{
         "id": 0,
-        "type": "statement" | "textfield" | "list" | "images-list",
+        "type": "statement" | "textfield" | "list" | "images-list" | "section",
         "multiple": true | false,
         "question": "",
         "description": "",
@@ -26,7 +26,7 @@ GET `/api/questions/`
             "image": "src" | null
         }] | null,
         "attachment": {
-            "type": "audio" | "video",
+            "type": "audio" | "video" | "image",
             "src_poster": "image_src",
             "src_path": "file_src",
             "src_type": "youtube" | "vimeo" | "file_extension",
