@@ -3,7 +3,9 @@
         progressBar = $('#progress'),
         progressBarCounter = 0,
         progressLabel = progressBar.find('.label span'),
-        progressPercent = progressBar.find('.bar .progress');
+        progressPercent = progressBar.find('.bar .progress'),
+        currSection = null,
+        focusOffsetPercent = 25;
     // variables end;
 
     var init = function (initOptions) {
@@ -36,7 +38,8 @@
       if (window.appOptions.mobile.one_question_per_page && $(window).width() < 768) {
         if (!$('#mobileStyles').length) {
           var mobileStyles = '.form .questions > li {visibility: hidden;}' +
-              '.form .questions > li.focus {visibility: visible;}';
+              '.form .questions > li.focus {visibility: visible;}' +
+              '.form .questions > li.fixed { height: 15%;}';
           var styleTag = $('<style/>', {id: 'mobileStyles'}).html(mobileStyles);
           $(document.head).append(styleTag);
         }
@@ -204,6 +207,10 @@
                                 currLiInitailState = currLi.clone(),
                                 otherClick = currLi.closest('li').attr('id') === "Other" && !currLi.hasClass('editable');
                             // end variables;
+
+                            if (!currLi.parent().closest('li').hasClass('focus')) {
+                              return;
+                            }
 
                             var otherClickHandler = function () {
                               if (!currLi.hasClass('locked')) {
@@ -391,6 +398,9 @@
                         });
                         li.find('ul.columns').append(choicesList);
                         li.find('ul.columns > li').on('click', function (event) {
+                            if (!currLi.hasClass('focus')) {
+                              return;
+                            }
                             if (!questionModel.multiple) {
                                 questions.find('ul.columns > li').removeClass('selected');
                                 $(event.target).closest('li').addClass('selected');
@@ -437,11 +447,21 @@
     },
 
     focusQuestion = function (event) {
-        var currentY = $(window).scrollTop() + parseInt(window.innerHeight/100*10);
+        var currentY = $(window).scrollTop() + parseInt(window.innerHeight/100*focusOffsetPercent);
 
         questions.find('>li').length && $.each(questions.find('>li'), function (index, question) {
             if (currentY >= question.offsetTop && currentY <= question.offsetTop + question.offsetHeight) {
                 if (!$(question).hasClass('focus')) {
+                  // show section fixed
+                  if ($(question).prevAll('.section').length && !$(question).hasClass('statement') && !(parseInt($(question).find('.wrapper .item span').text()) >= 0)) {
+                    currSection = $(question).prevAll('.section').first().clone();
+                    questions.append(currSection);
+                    $(currSection).addClass('fixed');
+                  }  else {
+                    questions.find('>li.section.fixed').remove();
+                    currSection = null;
+                  }
+
                   $(question).addClass('focus');
 
                   questions.find('input').blur();
@@ -462,7 +482,7 @@
 
         // submit is visible?
         var submitHeight = $(document).height() - ($(window).scrollTop() + window.innerHeight);
-        if (submitHeight <= parseInt(window.innerHeight/100*30)) {
+        if (submitHeight <= parseInt(window.innerHeight/100*focusOffsetPercent)) {
             $('#unfixed-footer').show(500);
         } else if ($('#unfixed-footer').is(':visible')) {
             $('#unfixed-footer').hide(500);
@@ -490,7 +510,7 @@
           currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
           currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: lawngreen;margin: 5px 0;">Answer accepted successfully!</p>');
         }
-        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*3)}, '500',function(){
+        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - (parseInt(window.innerHeight/100*focusOffsetPercent)-1)}, '500',function(){
             //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
         });
     },
@@ -502,16 +522,20 @@
         switch (btnType) {
             case "up":
                 if ($(event.target).closest('div.button.nav').hasClass('enabled')) {
-                    questions.find('>li.focus').prev().length && $('body').animate({scrollTop: questions.find('>li.focus').prev().offset().top - parseInt(window.innerHeight/100*3)}, '500',function(){
+                    questions.find('>li.focus').prev().length && $('body').animate({scrollTop: questions.find('>li.focus').prev().offset().top - (parseInt(window.innerHeight/100*focusOffsetPercent)-1)}, '500',function(){
                         //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
                     });
                 }
                 break;
 
             default:
-                var currentQuestion = questions.find('>li.focus');
+                var currentQuestion = $(event.target).closest('li');
                     questType = currentQuestion.data('model') && currentQuestion.data('model').type,
                     qotoQuestion = '';
+
+                if (!currentQuestion.hasClass('focus')) {
+                    return;
+                }
 
                 if (!currentQuestion.hasClass('locked')) {
                     switch (questType) {
@@ -624,7 +648,7 @@
                 }
 
                 if ($(event.target).closest('div.button.nav').hasClass('enabled')) {
-                    questions.find('>li.focus').next().length &&  $('body').animate({scrollTop: questions.find('>li.focus').next().offset().top - parseInt(window.innerHeight/100*3)}, '500',function(){
+                    questions.find('>li.focus').next().length &&  $('body').animate({scrollTop: questions.find('>li.focus').next().offset().top - (parseInt(window.innerHeight/100*focusOffsetPercent)-1)}, '500',function(){
                         //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
                     });
                 }
