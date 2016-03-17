@@ -469,9 +469,15 @@
 
                   // if user don't reply on previos question, make different li style
                   var prevQuestion = $(question).prev(':not([class*="statement"]):not([class*="section"])');
-                  prevQuestion.length
-                  && !prevQuestion.hasClass('aswered')
-                  && prevQuestion.addClass('dirty');
+                  if (prevQuestion.length && !prevQuestion.hasClass('answered')) {
+                    if (prevQuestion.data('model').required === false) {
+                      progressBarCounter++;
+                      prevQuestion.addClass('answered');
+                      progressBarInit();
+                    } else {
+                      prevQuestion.addClass('dirty');
+                    }
+                  }
                 }
                 // enable btn navigation
                 checkNavigationBtns(question);
@@ -508,10 +514,18 @@
           currentQuestion.nextUntil('#' + qotoQuestion).addClass('locked');
           currentQuestion.nextUntil('#' + qotoQuestion).find('.input input').prop('readonly', true);
           currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
-          currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: lawngreen;margin: 5px 0;">Answer accepted successfully!</p>');
+          currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: #37CC3C;margin: 5px 0;">Answer accepted successfully!</p>');
         }
-        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - (parseInt(window.innerHeight/100*focusOffsetPercent)-1)}, '500',function(){
+        questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*(focusOffsetPercent-5))}, '500',function(){
             //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
+            currentQuestion.nextUntil('#' + qotoQuestion).filter(':not([class*="statement"]):not([class*="section"]):not([class*="answered"])').length
+            && currentQuestion.nextUntil('#' + qotoQuestion).filter(':not([class*="statement"]):not([class*="section"]):not([class*="answered"])').each(function (index, value) {
+              if ($(value).data('model').required === false) {
+                progressBarCounter++;
+                $(value).addClass('answered');
+              }
+            });
+            progressBarInit();
         });
     },
 
@@ -522,7 +536,7 @@
         switch (btnType) {
             case "up":
                 if ($(event.target).closest('div.button.nav').hasClass('enabled')) {
-                    questions.find('>li.focus').prev().length && $('body').animate({scrollTop: questions.find('>li.focus').prev().offset().top - (parseInt(window.innerHeight/100*focusOffsetPercent)-1)}, '500',function(){
+                    questions.find('>li.focus').prev().length && $('body').animate({scrollTop: questions.find('>li.focus').prev().offset().top - parseInt(window.innerHeight/100*(focusOffsetPercent-5))}, '500',function(){
                         //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
                     });
                 }
@@ -533,7 +547,7 @@
                     questType = currentQuestion.data('model') && currentQuestion.data('model').type,
                     qotoQuestion = '';
 
-                if (!currentQuestion.hasClass('focus')) {
+                if (btnType !== 'down' && !currentQuestion.hasClass('focus')) {
                     return;
                 }
 
@@ -555,9 +569,9 @@
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
-                                        if (!currentQuestion.hasClass('aswered')) {
+                                        if (!currentQuestion.hasClass('answered')) {
                                           progressBarCounter++;
-                                          currentQuestion.removeClass('dirty').addClass('aswered');
+                                          currentQuestion.removeClass('dirty').addClass('answered');
                                         }
 
                                         if (!window.appOptions.old_questions_editables) {
@@ -571,7 +585,7 @@
                                         }
 
                                         if (response.data.result.msg) {
-                                            currentQuestion.find('.message').html('<p style="color: lawngreen;margin: 5px 0;">'+ response.data.result.msg +'</p>');
+                                            currentQuestion.find('.message').html('<p style="color: #37CC3C;margin: 5px 0;">'+ response.data.result.msg +'</p>');
                                         }
 
                                         if (response.data.go_to_another_question) {
@@ -609,9 +623,9 @@
                                 // sending api request
                                 selfAPI.get(function (response) {
                                     if (response.data.result.status === "success") {
-                                        if (!currentQuestion.hasClass('aswered')) {
+                                        if (!currentQuestion.hasClass('answered')) {
                                           progressBarCounter++;
-                                          currentQuestion.removeClass('dirty').addClass('aswered');
+                                          currentQuestion.removeClass('dirty').addClass('answered');
                                         }
 
                                         if (!window.appOptions.old_questions_editables) {
@@ -648,7 +662,7 @@
                 }
 
                 if ($(event.target).closest('div.button.nav').hasClass('enabled')) {
-                    questions.find('>li.focus').next().length &&  $('body').animate({scrollTop: questions.find('>li.focus').next().offset().top - (parseInt(window.innerHeight/100*focusOffsetPercent)-1)}, '500',function(){
+                    questions.find('>li.focus').next().length &&  $('body').animate({scrollTop: questions.find('>li.focus').next().offset().top - parseInt(window.innerHeight/100*(focusOffsetPercent-5))}, '500',function(){
                         //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
                     });
                 }

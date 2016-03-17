@@ -28,6 +28,40 @@
   /*opacity: 1;*/
 }
 
+.form .questions>li.dirty::before {
+  content: "\002a";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-block;
+  color: #8A2BE2;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.form .questions>li.answered {
+  background: rgba(32, 178, 170, 0.23);
+}
+
+.form .questions>li.answered::before {
+  content: "\e013";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-block;
+  color: #20B2AA;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .form .questions>li .wrapper {
   padding: 30px 20px 30px 0;
 }

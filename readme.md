@@ -17,6 +17,7 @@ GET `/api/questions/`
     "fields": [{
         "id": 0,
         "type": "statement" | "textfield" | "list" | "images-list" | "section",
+        "required": true | false,
         "multiple": true | false,
         "question": "",
         "description": "",

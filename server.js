@@ -30,6 +30,7 @@ http.createServer(function(req, res) {
                           {
                               "id": 202,
                               "type": "textfield",
+                              "required": false,
                               "question": "What is your first and lastname?",
                               "description": "We would love to get to know you better!"
                           },
@@ -417,7 +418,7 @@ http.createServer(function(req, res) {
                     res.writeHead(200, {"Content-Type": "application/json"});
                     res.end(JSON.stringify({
                         "go_to_another_question": 900,
-                        "total_progression": 21,
+                        // "total_progression": 21,
                         "result": {
                             "status": "success",
                             "msg": "Answer accepted successfully!"
