@@ -514,7 +514,7 @@
           currentQuestion.nextUntil('#' + qotoQuestion).addClass('locked');
           currentQuestion.nextUntil('#' + qotoQuestion).find('.input input').prop('readonly', true);
           currentQuestion.nextUntil('#' + qotoQuestion).find('ul.columns > li').off('click');
-          currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p style="color: #37CC3C;margin: 5px 0;">Answer accepted successfully!</p>');
+          currentQuestion.nextUntil('#' + qotoQuestion).find('.message').html('<p class="success" style="margin: 5px 0;">Answer accepted successfully!</p>');
         }
         questions.find('>li.focus').next().length &&  $('body').stop( true, true ).animate({scrollTop: $('#'+qotoQuestion).offset().top - parseInt(window.innerHeight/100*(focusOffsetPercent-5))}, '500',function(){
             //DO SOMETHING AFTER SCROLL ANIMATION COMPLETED
@@ -585,7 +585,7 @@
                                         }
 
                                         if (response.data.result.msg) {
-                                            currentQuestion.find('.message').html('<p style="color: #37CC3C;margin: 5px 0;">'+ response.data.result.msg +'</p>');
+                                            currentQuestion.find('.message').html('<p class="success" style="margin: 5px 0;">'+ response.data.result.msg +'</p>');
                                         }
 
                                         if (response.data.go_to_another_question) {
@@ -595,14 +595,14 @@
                                         }
                                     } else {
                                         if (response.data.result.msg) {
-                                            currentQuestion.find('.message').html('<p style="color: red;margin: 5px 0;">'+ response.data.result.msg +'</p>');
+                                            currentQuestion.find('.message').html('<p class="error" style="margin: 5px 0;">'+ response.data.result.msg +'</p>');
                                         }
                                     }
                                 }, '/check-question/', null, {data: answerModel});
 
                             } else {
                                 currentQuestion.find('.input input').focus();
-                                currentQuestion.find('.message').html('<p style="color: red;margin: 5px 0;">Sorry, but you must to answer...</p>');
+                                currentQuestion.find('.message').html('<p class="error" style="margin: 5px 0;">Sorry, but you must to answer...</p>');
                                 return;
                             }
                             break;
@@ -639,7 +639,7 @@
                                         }
 
                                         if (response.data.result.msg) {
-                                            currentQuestion.find('.message').html('<p style="color: lawngreen;margin: 5px 0;">'+ response.data.result.msg +'</p>');
+                                            currentQuestion.find('.message').html('<p class="success" style="margin: 5px 0;">'+ response.data.result.msg +'</p>');
                                         }
 
                                         if (response.data.go_to_another_question) {
@@ -649,12 +649,12 @@
                                         }
                                     } else {
                                         if (response.data.result.msg) {
-                                            currentQuestion.find('.message').html('<p style="color: red;margin: 5px 0;">'+ response.data.result.msg +'</p>');
+                                            currentQuestion.find('.message').html('<p class="error" style="margin: 5px 0;">'+ response.data.result.msg +'</p>');
                                         }
                                     }
                                 }, '/check-question/', null, {data: answerModel});
                             } else {
-                                currentQuestion.find('.message').html('<p style="color: red;margin: 5px 0;">Sorry, but you must to answer...</p>');
+                                currentQuestion.find('.message').html('<p class="error" style="margin: 5px 0;">Sorry, but you must to answer...</p>');
                                 return;
                             }
                             break;

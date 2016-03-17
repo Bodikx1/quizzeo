@@ -17,6 +17,7 @@ var uglifyMinify = false;
 var concatCssOpt = {rebaseUrls: false}; //
 var j = 'js',
     c = 'css';
+var colorTheme = 'gray';
 
 //=============== routine tasks (same for each project) ===================
 
@@ -40,7 +41,8 @@ gulp.task('main', function () {
 
     // css
     stream = gulp.src([
-            sourcesDir + 'css/**/*.scss'
+            sourcesDir + 'css/*.scss',
+            sourcesDir + 'css/color-themes/'+colorTheme+'.scss'
         ])
         .pipe(sass().on('error', sass.logError));
     min(stream, c);
