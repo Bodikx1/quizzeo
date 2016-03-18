@@ -417,7 +417,7 @@ http.createServer(function(req, res) {
                 if (req.method === "GET") {
                     res.writeHead(200, {"Content-Type": "application/json"});
                     res.end(JSON.stringify({
-                        "go_to_another_question": 900,
+                        //"go_to_another_question": 900,
                         // "total_progression": 21,
                         "result": {
                             "status": "success",

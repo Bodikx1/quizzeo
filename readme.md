@@ -19,6 +19,7 @@ GET `/api/questions/`
         "type": "statement" | "textfield" | "list" | "images-list" | "section",
         "required": true | false,
         "multiple": true | false,
+        "quick-validate": true | false, // for yes\no list options
         "question": "",
         "description": "",
         "choices": [{

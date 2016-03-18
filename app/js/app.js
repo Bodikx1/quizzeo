@@ -685,7 +685,11 @@
     enterHandler = function (event) {
         if (event.which === 13) {
             if (questions.find('>li.focus').next().length) {
-                questions.find('>li.focus .button-wrapper .button').trigger('click');
+                if ($(event.target).is(':input')) {
+                  $(event.target).blur();
+                } else {
+                  questions.find('>li.focus .button-wrapper .button').trigger('click');
+                }
             } else {
                 $('.button-wrapper.submit .button').trigger('click');
             }
