@@ -45,7 +45,8 @@ http.createServer(function(req, res) {
                           {
                               "id": 204,
                               "type": "list",
-                              "multiple": true,
+                              "multiple": false,
+                              "quick-validate": true,
                               "question": "Please tag your activity ?",
                               "choices": [
                                   {
@@ -123,7 +124,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 301,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Do you employ developers?",
@@ -148,7 +149,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 303,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Would you be interested in a quick and efficient logical quiz that helps you evaluate developers before hiring them?",
@@ -172,7 +173,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 401,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Do you store a growing base of documents, images, videos...?",
@@ -224,7 +225,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 403,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Would you be interested in a simple and cost-effective cloud storage solution?",
@@ -269,7 +270,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 505,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Do you feel you that you are losing some time managing transactional emails ? (Check them, fix wording, design problems...) ?",
@@ -293,7 +294,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 601,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Do you deal with many images in your product/website/application?",
@@ -318,7 +319,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 603,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Do you feel that you are losing some time managing images ?",
@@ -336,7 +337,7 @@ http.createServer(function(req, res) {
 
                           {
                               "id": 800,
-                              "type": "list",
+                              "type": "boolean",
                               "multiple": false,
                               "quick-validate": true,
                               "question": "Are you the CTO ?",

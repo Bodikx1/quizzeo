@@ -16,10 +16,10 @@ GET `/api/questions/`
 {
     "fields": [{
         "id": 0,
-        "type": "statement" | "textfield" | "list" | "images-list" | "section",
+        "type": "statement" | "textfield" | "list" | "images-list" | "section" | "boolean" | "score" | "range",
         "required": true | false,
         "multiple": true | false,
-        "quick-validate": true | false, // for yes\no list options
+        "quick-validate": true | false,
         "question": "",
         "description": "",
         "choices": [{

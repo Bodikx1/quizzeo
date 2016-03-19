@@ -154,6 +154,23 @@
   -ms-filter: "alpha(Opacity=70)";
 }
 
+.form .questions .list.boolean .image {
+  border: 0;
+  background: none;
+  display: table-cell;
+  color: #4fb0ae;
+  text-align: center;
+  font-size: 7em;
+  vertical-align: middle;
+}
+
+.form .questions .list.boolean .label {
+  display: block;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.form .questions .list.boolean .columns li.selected .tick,
 .form .questions .list.quick-validate .confirm-container {
   display: none;
 }

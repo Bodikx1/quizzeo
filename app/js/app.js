@@ -339,9 +339,84 @@
                     case "images-list":
                         var choicesList = [],
                             chCode = 65;
+                        // end variables;
+
+                        var choicesClickHandler = function (event) {
+                            var currLi = $(event.target).closest('li'),
+                                currLiInitailState = currLi.clone(),
+                                otherClick = currLi.closest('li').attr('id') === "Other" && !currLi.hasClass('editable');
+                            // end variables;
+
+                            if (!currLi.parent().closest('li').hasClass('focus')) {
+                              return;
+                            }
+
+                            var otherClickHandler = function () {
+                              if (!currLi.hasClass('locked')) {
+                                var letter = currLi.find('.letter span').text().charCodeAt(0);
+
+                                currLi.html('<div class="input"><input class="" type="text" autocomplete="off" value="'+currLi.find('input[name="value"]').val()+'"></div>')
+                                  .addClass('locked')
+                                  .find('.input input').focus()
+                                  .one('blur', function (event) {
+                                    if (!currLi.hasClass('editable')) {
+                                      currLiInitailState.find('.letter span').text(String.fromCharCode(chCode).toUpperCase());
+                                      currLiInitailState.on('click', choicesClickHandler);
+                                      chCode++;
+                                    }
+
+
+                                    currLi.html('<input type="hidden" name="value" value="'+ $(this).val() +'" autocomplete="off">' +
+                                    '<div class="letter"><span>'+ String.fromCharCode(letter).toUpperCase() +'</span></div>' +
+                                    '<span class="label">'+ $(this).val() +' <span class="glyphicon glyphicon-pencil" style="font-size: 15px;"></span> <span class="glyphicon glyphicon-remove" style="font-size: 15px;"></span></span>' +
+                                    '<span class="tick glyphicon glyphicon-ok"></span>' +
+                                    '<div class="aux ">' +
+                                    '<div class="inset"></div>' +
+                                    '<div class="bg"></div>' +
+                                    '<div class="bd"></div>' +
+                                    '<div class="overlay"></div>' +
+                                    '</div>').removeClass('locked').addClass('editable').after(currLiInitailState);
+
+                                    currLi.find('.glyphicon-pencil').one('click', function (event) {
+                                        otherClickHandler();
+                                    });
+
+                                    currLi.find('.glyphicon-remove').one('click', function (event) {
+                                      currLi.nextUntil('ul').each(function (index, value) {
+                                        var letter = $(value).find('.letter span').text().charCodeAt(0);
+                                        $(value).find('.letter span').text(String.fromCharCode(--letter).toUpperCase());
+                                      });
+                                      currLi.remove();
+                                      chCode--;
+                                    });
+                                  });
+                                }
+                            };
+                            // end functions;
+
+                            if (!questionModel.multiple) {
+                              if (!otherClick) {
+                                questions.find('ul.columns > li').removeClass('selected');
+                                currLi.addClass('selected');
+                                // quick-validate
+                                if (li.hasClass('quick-validate')) {
+                                  li.find('.button.nav').trigger('click');
+                                }
+                              } else if (!currLi.hasClass('editable')) {
+                                otherClickHandler();
+                              }
+                            } else {
+                              if (!otherClick) {
+                                currLi.toggleClass('selected');
+                              } else if (!currLi.hasClass('editable')) {
+                                otherClickHandler();
+                              }
+                            }
+                        };
+                        // end functions;
 
                         !isSection && questionsNumerator++;
-                        li.addClass('images list'+ (questionModel.multiple ? ' multiple' : ''));
+                        li.addClass('images list'+ (questionModel.multiple ? ' multiple' : '') + (questionModel['quick-validate'] ? ' quick-validate' : ''));
                         li.html('<div class="wrapper">' +
                             '<div class="item">' +
                             '<span>'+ (isSection ? String.fromCharCode(lettersNumerator++).toLowerCase()+'.' : questionsNumerator) +'</span>' +
@@ -382,7 +457,7 @@
 
                         questionModel.choices.length && questionModel.choices.forEach(function (choiceModel, index) {
                             choicesList.push('<li id="'+ choiceModel.id +'">' +
-                                '<input type="hidden" name="value" value="'+ choiceModel.label +'" autocomplete="off">' +
+                                '<input type="hidden" name="value" value="'+ choiceModel.id +'" autocomplete="off">' +
                                 '<div style="background-image: url('+ choiceModel.image +');" class="image"></div>' +
                                 '<div class="letter"><span>'+ String.fromCharCode(chCode).toUpperCase() +'</span></div>' +
                                 '<span class="label">'+ choiceModel.label +'</span>' +
@@ -397,17 +472,146 @@
                             chCode++;
                         });
                         li.find('ul.columns').append(choicesList);
-                        li.find('ul.columns > li').on('click', function (event) {
-                            if (!currLi.hasClass('focus')) {
+                        li.find('ul.columns > li').on('click', choicesClickHandler);
+                        break;
+
+                    case "boolean":
+                        var choicesList = [],
+                            chCode = 65;
+                        // end variables;
+
+                        var choicesClickHandler = function (event) {
+                            var currLi = $(event.target).closest('li'),
+                                currLiInitailState = currLi.clone(),
+                                otherClick = currLi.closest('li').attr('id') === "Other" && !currLi.hasClass('editable');
+                            // end variables;
+
+                            if (!currLi.parent().closest('li').hasClass('focus')) {
                               return;
                             }
+
+                            var otherClickHandler = function () {
+                              if (!currLi.hasClass('locked')) {
+                                var letter = currLi.find('.letter span').text().charCodeAt(0);
+
+                                currLi.html('<div class="input"><input class="" type="text" autocomplete="off" value="'+currLi.find('input[name="value"]').val()+'"></div>')
+                                  .addClass('locked')
+                                  .find('.input input').focus()
+                                  .one('blur', function (event) {
+                                    if (!currLi.hasClass('editable')) {
+                                      currLiInitailState.find('.letter span').text(String.fromCharCode(chCode).toUpperCase());
+                                      currLiInitailState.on('click', choicesClickHandler);
+                                      chCode++;
+                                    }
+
+
+                                    currLi.html('<input type="hidden" name="value" value="'+ $(this).val() +'" autocomplete="off">' +
+                                    '<div class="letter"><span>'+ String.fromCharCode(letter).toUpperCase() +'</span></div>' +
+                                    '<span class="label">'+ $(this).val() +' <span class="glyphicon glyphicon-pencil" style="font-size: 15px;"></span> <span class="glyphicon glyphicon-remove" style="font-size: 15px;"></span></span>' +
+                                    '<span class="tick glyphicon glyphicon-ok"></span>' +
+                                    '<div class="aux ">' +
+                                    '<div class="inset"></div>' +
+                                    '<div class="bg"></div>' +
+                                    '<div class="bd"></div>' +
+                                    '<div class="overlay"></div>' +
+                                    '</div>').removeClass('locked').addClass('editable').after(currLiInitailState);
+
+                                    currLi.find('.glyphicon-pencil').one('click', function (event) {
+                                        otherClickHandler();
+                                    });
+
+                                    currLi.find('.glyphicon-remove').one('click', function (event) {
+                                      currLi.nextUntil('ul').each(function (index, value) {
+                                        var letter = $(value).find('.letter span').text().charCodeAt(0);
+                                        $(value).find('.letter span').text(String.fromCharCode(--letter).toUpperCase());
+                                      });
+                                      currLi.remove();
+                                      chCode--;
+                                    });
+                                  });
+                                }
+                            };
+                            // end functions;
+
                             if (!questionModel.multiple) {
+                              if (!otherClick) {
                                 questions.find('ul.columns > li').removeClass('selected');
-                                $(event.target).closest('li').addClass('selected');
+                                currLi.addClass('selected');
+                                // quick-validate
+                                if (li.hasClass('quick-validate')) {
+                                  li.find('.button.nav').trigger('click');
+                                }
+                              } else if (!currLi.hasClass('editable')) {
+                                otherClickHandler();
+                              }
                             } else {
-                                $(event.target).closest('li').toggleClass('selected');
+                              if (!otherClick) {
+                                currLi.toggleClass('selected');
+                              } else if (!currLi.hasClass('editable')) {
+                                otherClickHandler();
+                              }
                             }
+                        };
+                        // end functions;
+
+                        !isSection && questionsNumerator++;
+                        li.addClass('boolean list' + (questionModel['quick-validate'] ? ' quick-validate' : ''));
+                        li.html('<div class="wrapper">' +
+                            '<div class="item">' +
+                            '<span>'+ (isSection ? String.fromCharCode(lettersNumerator++).toLowerCase()+'.' : questionsNumerator) +'</span>' +
+                            '<div class="arrow">' +
+                            '<div '+ (isSection ? 'style="display:none;"' : '') +' class="arrow-right"></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="question"><span>'+ questionModel.question +'</span></div>' +
+                            '<div class="content">' +
+                            '<div class="description">'+ (questionModel.description ? questionModel.description : '') +'</div>' +
+                            '<div class="content-wrapper">' +
+                            '<div class="attachment-wrapper">' +
+                            '<div class="control">' +
+                            '<div class="multiple">Choose as many as you like</div>' +
+                            '<ul class="columns"></ul>' +
+                            '</div>' +
+                            '<div class="clear"></div>' +
+                            '</div>' +
+                            '<div class="clear"></div>' +
+                            '<div class="message "><span></span>'+
+                            '<div></div>' +
+                            '</div>' +
+                            '<div class="confirm-container ">' +
+                            '<div class="button-wrapper confirm">' +
+                            '<div class="button nav hover-effect enabled"><span>Ok</span><span class="confirm"></span></div>' +
+                            '</div>' +
+                            '<div class="text">press <strong>ENTER</strong></div>' +
+                            '<div class="aux no-hover">' +
+                            '<div class="inset"></div>' +
+                            '<div class="bg"></div>' +
+                            '<div class="bd"></div>' +
+                            '<div class="overlay"></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
+
+                        questionModel.choices.length && questionModel.choices.forEach(function (choiceModel, index) {
+                            choicesList.push('<li id="'+ choiceModel.id +'">' +
+                                '<input type="hidden" name="value" value="'+ choiceModel.id +'" autocomplete="off">' +
+                                '<div class="image"><span class="glyphicon glyphicon-'+ (choiceModel.id == 1 ? 'ok' : 'remove') +'"></span></div>' +
+                                '<div class="letter"><span>'+ String.fromCharCode(chCode).toUpperCase() +'</span></div>' +
+                                '<span class="label">'+ choiceModel.label +'</span>' +
+                                '<span class="tick glyphicon glyphicon-ok"></span>' +
+                                '<div class="aux ">' +
+                                '<div class="inset"></div>' +
+                                '<div class="bg"></div>' +
+                                '<div class="bd"></div>' +
+                                '<div class="overlay"></div>' +
+                                '</div>' +
+                                '</li>');
+                            chCode++;
                         });
+                        li.find('ul.columns').append(choicesList);
+                        li.find('ul.columns > li').on('click', choicesClickHandler);
                         break;
                 }
 
@@ -609,6 +813,7 @@
 
                         case "list":
                         case "images-list":
+                        case "boolean":
                             var answerModel = {
                                 id: currentQuestion.data('model').id,
                                 value: []
@@ -685,7 +890,7 @@
     enterHandler = function (event) {
         if (event.which === 13) {
             if (questions.find('>li.focus').next().length) {
-                if ($(event.target).is(':input')) {
+                if ($(event.target).is(':input') && $(event.target).closest('li').hasClass('locked')) {
                   $(event.target).blur();
                 } else {
                   questions.find('>li.focus .button-wrapper .button').trigger('click');

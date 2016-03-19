@@ -41,7 +41,8 @@ input, textarea,
 .form .questions .list ul li .label,
 .form .questions .list ul li .letter,
 .form .questions .list ul li .tick,
-#fixed-footer .content #progress .label {
+#fixed-footer .content #progress .label,
+.form .questions .list.boolean .image {
   color: #425454;
 }
 
