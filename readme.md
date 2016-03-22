@@ -20,6 +20,13 @@ GET `/api/questions/`
         "required": true | false,
         "multiple": true | false,
         "quick-validate": true | false,
+        "icon": "icon-name" | null,  // if "type":"score" - we can choose icon from FontAwesome
+        "maximum": 6 | null,  // if "type":"score" - we can put `5` we have 5 stars, 8 we have 8 stars
+        "min": 0 | null,  // "type":"range"
+        "max": 8 | null,  // "type":"range"
+        "labels": {
+            0: "weak", 4: "medium", 8: "strong"
+        } | null,  // "type":"range"
         "question": "",
         "description": "",
         "choices": [{

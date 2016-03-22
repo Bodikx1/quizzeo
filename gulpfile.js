@@ -17,7 +17,7 @@ var uglifyMinify = false;
 var concatCssOpt = {rebaseUrls: false}; //
 var j = 'js',
     c = 'css';
-var colorTheme = 'gray';
+var colorTheme = 'green';
 
 //=============== routine tasks (same for each project) ===================
 
@@ -49,6 +49,10 @@ gulp.task('main', function () {
     stream
         .pipe(concatCss("app.css", concatCssOpt))
         .pipe(gulp.dest(destDir + 'css'));
+
+    //img
+    var stream = gulp.src([sourcesDir + "css/color-themes/img/*"]);
+    stream.pipe(gulp.dest(destDir + 'css/img/'));
 });
 
 /** Default */
@@ -60,6 +64,8 @@ gulp.task('vendors', function () {
     gulp.src([sourcesDir + bowDir + 'jquery/dist/jquery.min.js']).pipe(gulp.dest(destDir + 'vendor/jquery/'));
     gulp.src([sourcesDir + bowDir + 'sweetalert/dist/*']).pipe(gulp.dest(destDir + 'vendor/sweetalert/'));
     gulp.src([sourcesDir + bowDir + 'plyr/dist/*']).pipe(gulp.dest(destDir + 'vendor/plyr/'));
+    gulp.src([sourcesDir + bowDir + 'font-awesome/css/*']).pipe(gulp.dest(destDir + 'vendor/font-awesome/css'));
+    gulp.src([sourcesDir + bowDir + 'font-awesome/fonts/*']).pipe(gulp.dest(destDir + 'vendor/font-awesome/fonts'));
 });
 
 /** Bower */

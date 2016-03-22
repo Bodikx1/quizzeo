@@ -171,7 +171,7 @@
 }
 
 .form .questions .list.boolean .columns li.selected .tick,
-.form .questions .list.quick-validate .confirm-container {
+.form .questions > li.quick-validate .confirm-container {
   display: none;
 }
 
@@ -401,6 +401,7 @@ li.images.list .columns li .image {
 
       .arrow {
         top: 50%;
+        left: 30px;
       }
     }
 
@@ -434,6 +435,200 @@ li.images.list .columns li .image {
       }
     }
   }
+}
+
+.score .icons {
+  padding: 0;
+  margin: 10px 0;
+}
+
+.score .icons li {
+  width: 66px;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 7px;
+  list-style: none;
+}
+
+.score .icons li .center {
+  text-align: center;
+}
+
+.score .icons li .icon {
+  padding-top: 1px;
+  font-weight: 400;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+.score .icons li .icon.back {
+  color: black !important;
+  position: absolute;
+  margin-left: -55px;
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  -ms-filter: "alpha(Opacity=0)";
+  -moz-transition: opacity ease-out 100ms 0ms;
+  -webkit-transition: opacity ease-out 100ms 0ms;
+  -o-transition: opacity ease-out 100ms 0ms;
+  transition: opacity ease-out 100ms 0ms;
+}
+
+.score .icons li.hover .icon.back, .score .icons li.selected .icon.back {
+  -khtml-opacity: .5;
+  -moz-opacity: .5;
+  opacity: .5;
+  -ms-filter: "alpha(Opacity=20)";
+  -moz-transition: opacity ease-out 100ms 0ms;
+  -webkit-transition: opacity ease-out 100ms 0ms;
+  -o-transition: opacity ease-out 100ms 0ms;
+  transition: opacity ease-out 100ms 0ms;
+}
+
+.score .icons li .icon.fa {
+  color: #58c3d1;
+  font-size: 5em;
+}
+
+.score .icons li .label {
+  color: #58c3d1;
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.score .icons li .label .letter {
+  margin: 0;
+}
+
+.layout-columns  {
+  padding: 0;
+  border: 1px solid #B2B2B2;
+  margin-bottom: 40px;
+}
+
+.layout-columns > li {
+  display: table-cell;
+  width: 2%;
+  word-break: break-word;
+}
+
+.layout-columns > li:first-child .bd {
+  border-left-width: 0px
+}
+
+.layout-columns > li:hover .bg,
+.layout-columns > li.selected .bg{
+  background: #337ab7;
+  opacity: 0.1;
+}
+
+.choice-square {
+  text-align: center;
+  cursor: pointer;
+}
+
+.choice-square .choice-wrapper {
+  position: relative;
+  display: block;
+  padding: 20px 0 19px;
+}
+
+.choice-square .choice-wrapper {
+  position: relative;
+  display: block;
+  padding: 20px 0 19px;
+}
+
+.choice-square .label {
+  color: #58c3d1;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.choice-square .line {
+  display: none;
+  position: absolute;
+  height: 10px;
+  bottom: -10px;
+  width: 100%;
+  border-left: 1px solid #000;
+  left: 50%;
+}
+
+.choice-square .line span {
+  position: absolute;
+  top: 10px;
+  left: -50%;
+  width: 100%;
+  color: #58c3d1;
+}
+
+.choice-square .aux,
+.choice-square .aux div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  /*border-color: #58c3d1;*/
+}
+
+.choice-square .aux .inset {
+  -khtml-opacity: .5;
+  -moz-opacity: .5;
+  opacity: .5;
+  -ms-filter: "alpha(Opacity=50)";
+  border-radius: 2px 0 0 2px;
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
+  z-index: 3;
+  -webkit-box-shadow: inset 0 2px 0 #fff;
+  -moz-box-shadow: inset 0 2px 0 #fff;
+  box-shadow: inset 0 2px 0 #fff;
+}
+
+.choice-square .bg {
+  -khtml-opacity: .03;
+  -moz-opacity: .03;
+  opacity: .03;
+  -ms-filter: "alpha(Opacity=3)";
+  z-index: 2;
+  background: #000;
+}
+
+.choice-square .bd {
+  border-left: 0;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 2px 0 0 2px;
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
+  border-left-style: solid;
+  border-left-width: 1px;
+  -khtml-opacity: .15;
+  -moz-opacity: .15;
+  opacity: .15;
+  -ms-filter: "alpha(Opacity=15)";
+}
+
+.choice-square .overlay {
+  background-color: #000;
+  background-color: rgba(0,0,0,0);
+  z-index: 1;
+}
+
+.choice-square .background {
+  border-radius: 2px 0 0 2px;
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
 }
 
 #fixed-footer {

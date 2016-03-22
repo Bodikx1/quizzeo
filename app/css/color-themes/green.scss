@@ -1,7 +1,23 @@
+body::after {
+  background-color: #c1ef41;
+  background-image: url(img/bg.jpeg);
+  background-repeat: repeat;
+  background-attachment: fixed;
+  content: "";
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
+}
+
 .button.general,
 .button.nav {
-  background-color: #b0b0b0;
-  border: 1px solid #000;
+  color: #5c780a;
+  background-color: #c5f044;
+  border: 1px solid #607d0a;
 }
 
 .button.nav.hover-effect:hover.enabled,
@@ -9,7 +25,7 @@
 .default .footer-confirm .button.nav:hover.enabled,
 .screen .focus .button.nav:hover.enabled,
 .default #banner .button.nav:hover.enabled {
-  background-color: #cacaca;
+  background-color: #d4f473;
 }
 
 .default .focus .button.nav:active.enabled,.default .footer .button.nav:active.enabled,.button.nav.selected,.button.nav.active.enabled,.default #banner .button.nav:active.enabled {
@@ -18,11 +34,11 @@
 
 .question,
 .item {
-  color: #585870 !important;
+  color: #5c780a !important;
 }
 
 .score .icons li .icon.fa {
-  color: #b0b0b0;
+  color: #5c780a;
 }
 
 
@@ -50,22 +66,28 @@ input, textarea,
 .form .questions .list.boolean .image,
 .score .icons li .label,
 .choice-square .label,
-.choice-square .line span{
-  color: #425454;
+.choice-square .line span,
+.form .questions > li .content .description {
+  color: #5c780a;
 }
 
 .form .questions > li .input input {
-  border: 2px dashed #ccc;
+  border: 2px dashed #5c780a;
 }
 
 .form .questions .list.multiple .control {
-  border-color: #ccc;
+  border-color: #5c780a;
 }
 
-#fixed-footer .content #progress .bar div.progress {
-  background-color: #b0b0b0;
-}
-
+#fixed-footer .content #progress .bar div.progress,
 #fixed-footer .content #progress .bar div.wrapper {
-  background-color: #cacaca;
+  background-color: #3f4237;
+}
+
+.form .questions > li.fixed {
+  background-color: #c1ef41;
+}
+
+#fixed-footer > .overlay {
+  background-color: #c1ef41;
 }
